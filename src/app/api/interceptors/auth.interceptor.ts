@@ -12,7 +12,7 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this._api.JwtToken) {
       const newReq = req.clone({
-        setHeaders: { 'Authorization': this._api.JwtToken }
+        setHeaders: { 'Authorization': this._api.HeaderAuthorization }
       })
       return next.handle(newReq)
     }
