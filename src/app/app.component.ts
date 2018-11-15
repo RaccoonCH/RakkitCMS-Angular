@@ -5,10 +5,9 @@ import gql from 'graphql-tag'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.styl']
+  styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  title = 'RakkitCMS-Angular'
   constructor(
     private api: Api
   ) {
@@ -38,4 +37,5 @@ export class AppComponent {
       console.log('gql', data)
     })
   }
+
 }
