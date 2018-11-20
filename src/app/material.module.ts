@@ -1,9 +1,14 @@
 import { NgModule } from '@angular/core'
 import {
   MatTabsModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatListModule,
+  MatButtonModule,
+  MatSidenavModule,
+  MatTableModule,
+  MatSortModule
 } from '@angular/material'
-
+import {CdkTableModule} from '@angular/cdk/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 // import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 
@@ -11,12 +16,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
   imports: [
     MatTabsModule,
     MatToolbarModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
     // NoopAnimationsModule
   ],
   exports: [
     MatTabsModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatListModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatTableModule,
+    MatSortModule,
+    CdkTableModule
   ]
 })
 export class MaterialModule { }

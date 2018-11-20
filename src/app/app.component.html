@@ -3,8 +3,19 @@
 </mat-toolbar>
 
 <mat-tab-group>
-  <mat-tab label="ESPACE DE TRAVAIL"> Content 1 </mat-tab>
-  <mat-tab label="FICHIERS"> Content 2 </mat-tab>
+  <mat-tab label="Manager">
+    <mat-drawer-container class="example-container" autosize>
+      <mat-drawer opened class="rps-list" mode="side">
+        <app-package-list (click)="selectedRp = $event"></app-package-list>
+      </mat-drawer>
+      <div class="rps-instances">
+        <app-rp-instance></app-rp-instance>
+      </div>
+    </mat-drawer-container>
+  </mat-tab>
+  <mat-tab label="Files">
+    Files list...
+  </mat-tab>
 </mat-tab-group>
 
 <router-outlet></router-outlet>

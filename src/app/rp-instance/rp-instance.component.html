@@ -1,0 +1,26 @@
+<table [hidden]="!RpInstances" mat-table [dataSource]="RpDataSource" matSort class="mat-elevation-z8">
+  <ng-container *ngFor="let prop of SelectedRpAttributes" [matColumnDef]="prop">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ prop }}
+    </th>
+    <td mat-cell *matCellDef="let element">
+      {{ element[prop] }}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="SelectedRpAttributes"></tr>
+  <tr mat-row *matRowDef="let row; columns: SelectedRpAttributes"></tr>
+</table>
+
+<!--
+<table *ngIf="_selectedRp" matSort (matSortChange)="sortData($event)">
+  <tr>
+    <th *ngFor="let prop of SelectedRpAttributes" mat-sort-header>
+      {{prop}}
+    </th>
+  </tr>
+  <tr *ngFor="let rp of _rpInstances">
+    <td>{{rp.Id}}</td>
+  </tr>
+</table>
+-->  
