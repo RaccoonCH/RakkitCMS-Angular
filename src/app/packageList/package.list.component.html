@@ -1,0 +1,7 @@
+<mat-list role="list">
+  <mat-list-item role="listitem" *ngFor="let rp of _rps">
+    <button (click)="onClick(rp)" mat-button>
+      {{rp.name}}
+    </button>
+  </mat-list-item>
+</mat-list>
