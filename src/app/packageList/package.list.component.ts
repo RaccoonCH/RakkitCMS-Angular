@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { IRakkitPackage } from 'src/types/IRakkitPackage'
+import { RakkitPackage } from 'src/types'
 import { RakkitApiService } from '../rakkit-api.service'
 
 @Component({
@@ -8,7 +8,7 @@ import { RakkitApiService } from '../rakkit-api.service'
   styleUrls: ['./package.list.component.sass']
 })
 export class PackageListComponent {
-  public _rps: IRakkitPackage[]
+  public _rps: RakkitPackage[]
 
   constructor(
     private _rakkitApiService: RakkitApiService
@@ -18,7 +18,7 @@ export class PackageListComponent {
     })
   }
 
-  onClick(rp: IRakkitPackage) {
+  onClick(rp: RakkitPackage) {
     this._rakkitApiService.SelectedRp = rp
   }
 }

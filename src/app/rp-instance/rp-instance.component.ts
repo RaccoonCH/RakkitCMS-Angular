@@ -1,7 +1,7 @@
-import { IRakkitPackage } from '../../types/IRakkitPackage'
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { RakkitApiService } from '../rakkit-api.service'
 import { MatSort, MatTableDataSource } from '@angular/material'
+import { RakkitPackage } from '../../types'
 
 @Component({
   selector: 'app-rp-instance',
@@ -9,7 +9,7 @@ import { MatSort, MatTableDataSource } from '@angular/material'
   styleUrls: ['./rp-instance.component.sass']
 })
 export class RpInstanceComponent implements OnInit {
-  private _selectedRp: IRakkitPackage
+  private _selectedRp: RakkitPackage
   private _rpDataSource: MatTableDataSource<Object> = new MatTableDataSource([])
   @ViewChild(MatSort) sort: MatSort
 
@@ -26,8 +26,10 @@ export class RpInstanceComponent implements OnInit {
 
   public get SelectedRpAttributes() {
     if (this._selectedRp) {
-      return Object.getOwnPropertyNames(this._selectedRp.attributes).filter(prop => {
-        return this._selectedRp.attributes[prop].isInHeader
+      return this._selectedRp.attributes.filter((attr) => {
+        return attr.isInHeader && attr.type.name !== 'password'
+      }).map((attr) => {
+        return attr.name
       })
     }
     return []
@@ -50,8 +52,6 @@ export class RpInstanceComponent implements OnInit {
   }
 
   get() {
-    return this._rakkitApiService.query(`${this._selectedRp.name.toLocaleLowerCase()}s`, {
-      attrs: this.SelectedRpAttributes
-    })
+    return this._rakkitApiService.queryMain(this._selectedRp)
   }
 }

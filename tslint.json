@@ -97,6 +97,7 @@
       true,
       "allow-null-check"
     ],
+    "no-empty-interface": false,
     "typedef-whitespace": [
       true,
       {
