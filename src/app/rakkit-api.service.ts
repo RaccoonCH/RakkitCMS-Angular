@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core'
 import { Subject } from 'rxjs'
 import { map } from 'rxjs/operators'
 import { RakkitPackage } from 'src/types/RakkitPackage'
+import { RpInstanceResponse } from 'src/types/RakkitApi';
 
 @Injectable({
   providedIn: 'root'
@@ -35,13 +36,14 @@ export class RakkitApiService {
     )
   }
 
-  queryMain(rakkitPackage: RakkitPackage) {
+  queryMain(rakkitPackage: RakkitPackage, page: number, itemsPerPage: number) {
     return this._api.GraphqlClient.query({
-      query: rakkitPackage.MainQuery
+      query: rakkitPackage.getMainQuery(page, itemsPerPage)
     }).pipe(
       map(
         ({data}) => {
-          return data[rakkitPackage.mainQueryRoute].map((rp: Object) => {
+          const rootField: RpInstanceResponse = data[rakkitPackage.mainQueryRoute]
+          const items = rootField.items.map((rp: Object) => {
             return Object.getOwnPropertyNames(rp).reduce((finalRp: Object, prop: string) => {
               const modelMatch = rakkitPackage.attributes.find((attr) => attr.name === prop)
               let value = rp[prop]
@@ -57,6 +59,10 @@ export class RakkitApiService {
               return finalRp
             }, {})
           })
+          return {
+            ...rootField,
+            items
+          }
         }
       )
     )

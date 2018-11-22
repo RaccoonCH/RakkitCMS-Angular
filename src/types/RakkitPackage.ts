@@ -13,7 +13,7 @@ export class RakkitPackage implements IRakkitPackage {
   /**
    * Convert an array of attributes to a graphql query
    */
-  public get MainQuery() {
+  public getMainQuery(page: number, itemsPerPage: number) {
     const attributesToQuery = this.attributes.filter((attr) => attr.isInHeader).map((attr) => {
       switch (attr.type.name) {
         case 'password':
@@ -24,10 +24,15 @@ export class RakkitPackage implements IRakkitPackage {
           return attr.name
       }
     })
+    const pageBegins = itemsPerPage * page
+
     return gql`
       query {
-        ${this.mainQueryRoute} {
-          ${attributesToQuery}
+        ${this.mainQueryRoute}(count: true, limit: ${itemsPerPage}, skip: ${pageBegins}) {
+          count
+          items {
+            ${attributesToQuery}
+          }
         }
       }
     `
