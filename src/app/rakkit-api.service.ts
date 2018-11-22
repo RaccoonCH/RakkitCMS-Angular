@@ -1,10 +1,9 @@
-import { IRakkitPackage } from './../types/IRakkitPackage';
-import { Api } from './api/api.service';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import gql from 'graphql-tag';
-import { of, Subject } from 'rxjs'
+import { IRakkitPackage } from './../types/IRakkitPackage'
+import { Api } from './api/api.service'
+import { Injectable } from '@angular/core'
+import { Subject } from 'rxjs'
 import { map } from 'rxjs/operators'
+import { RakkitPackage } from 'src/types/RakkitPackage'
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +13,13 @@ export class RakkitApiService {
     private _api: Api
   ) { }
 
-  private _selectedRp: IRakkitPackage = null
-  private _selectedRpSubject: Subject<IRakkitPackage> = new Subject()
+  private _selectedRp: RakkitPackage = null
+  private _selectedRpSubject: Subject<RakkitPackage> = new Subject()
 
   get SelectedRpSubject() {
     return this._selectedRpSubject
   }
-  set SelectedRp(val: IRakkitPackage) {
+  set SelectedRp(val: RakkitPackage) {
     this._selectedRp = val
     this.SelectedRpSubject.next(val)
   }
@@ -29,18 +28,37 @@ export class RakkitApiService {
   }
 
   getRps() {
-    return this._api.RestClient.get<IRakkitPackage[]>('/')
+    return this._api.RestClient.get<IRakkitPackage[]>('/').pipe(
+      map((value) => {
+        return value.map(rp => new RakkitPackage(rp))
+      })
+    )
   }
 
-  query(query: string, options: { attrs: string[] }) {
+  queryMain(rakkitPackage: RakkitPackage) {
     return this._api.GraphqlClient.query({
-      query: gql`
-        query {
-          ${query} {
-            ${options.attrs.join(',')}
-          }
+      query: rakkitPackage.MainQuery
+    }).pipe(
+      map(
+        ({data}) => {
+          return data[rakkitPackage.mainQueryRoute].map((rp: Object) => {
+            return Object.getOwnPropertyNames(rp).reduce((finalRp: Object, prop: string) => {
+              const modelMatch = rakkitPackage.attributes.find((attr) => attr.name === prop)
+              let value = rp[prop]
+              switch (modelMatch.type.name) {
+                case 'object':
+                  value = rp[prop][modelMatch.propertyToShow]
+                  break
+                case 'password':
+                  value = modelMatch.maskText
+                  break
+              }
+              finalRp[prop] = value
+              return finalRp
+            }, {})
+          })
         }
-      `,
-    }).pipe(map(({data}) => data[query]))
+      )
+    )
   }
 }

@@ -86,7 +86,9 @@ export class Api {
       }
       angularApollo.create({
         link: gqlHttpLink,
-        cache: new InMemoryCache(),
+        cache: new InMemoryCache({
+          addTypename: false
+        }),
         connectToDevTools: true,
         defaultOptions: {
           watchQuery: { ...fetchPolicy },
