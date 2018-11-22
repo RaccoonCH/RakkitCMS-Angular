@@ -1,4 +1,11 @@
-<table [hidden]="!RpInstances" mat-table [dataSource]="RpDataSource" matSort class="mat-elevation-z8">
+<mat-paginator
+[length]="_totalItems"
+(page)="pageUpdate($event)"
+[pageSize]="_itemsPerPage"
+[pageSizeOptions]="_numbersOfItemsPerPage">
+</mat-paginator>
+
+<table [hidden]="!RpInstances" mat-table [dataSource]="RpDataSource" matSort>
   <ng-container *ngFor="let prop of SelectedRpAttributes" [matColumnDef]="prop">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>
       {{ prop }}

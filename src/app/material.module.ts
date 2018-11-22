@@ -6,7 +6,8 @@ import {
   MatButtonModule,
   MatSidenavModule,
   MatTableModule,
-  MatSortModule
+  MatSortModule,
+  MatPaginatorModule
 } from '@angular/material'
 import {CdkTableModule} from '@angular/cdk/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -27,7 +28,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
     MatSidenavModule,
     MatTableModule,
     MatSortModule,
-    CdkTableModule
+    CdkTableModule,
+    MatPaginatorModule
   ]
 })
 export class MaterialModule { }

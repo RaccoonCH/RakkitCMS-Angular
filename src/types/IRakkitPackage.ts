@@ -48,6 +48,6 @@ export interface IRakkitPackage {
   readonly description: string
   readonly requiredRole: string
   readonly attributes: RakkitType[]
-  readonly mainQueryRoute: string
   readonly icon?: string
+  readonly mainQueryRoute: string
 }
