@@ -6,10 +6,10 @@ import { RpInstanceResponse } from 'src/types/RakkitApi'
 
 @Component({
   selector: 'app-rp-instance',
-  templateUrl: './rp-instance.component.html',
-  styleUrls: ['./rp-instance.component.sass']
+  templateUrl: './rp-instances.component.html',
+  styleUrls: ['./rp-instances.component.sass']
 })
-export class RpInstanceComponent implements OnInit {
+export class RpInstancesComponent implements OnInit {
   @ViewChild(MatSort)
   private _sort: MatSort
   private _selectedRp: RakkitPackage
@@ -70,5 +70,9 @@ export class RpInstanceComponent implements OnInit {
     this._pageIndex = event.pageIndex
     this._itemsPerPage = event.pageSize
     this.getItems()
+  }
+
+  private openSideNav(element: Object) {
+    console.log(element)
   }
 }

@@ -4,14 +4,16 @@ import { NgModule } from '@angular/core'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { MaterialModule } from './material.module'
-import { PackageListComponent } from './packageList/package.list.component'
-import { RpInstanceComponent } from './rp-instance/rp-instance.component';
+import { PackageListComponent } from './package-list/package-list.component'
+import { RpInstancesComponent } from './rp-instances/rp-instances.component'
+import { SidenavComponent } from './sidenav/sidenav.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     PackageListComponent,
-    RpInstanceComponent
+    RpInstancesComponent,
+    SidenavComponent
   ],
   imports: [
     ApiModule.forRoot({

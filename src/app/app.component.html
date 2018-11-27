@@ -4,6 +4,7 @@
 
 <mat-tab-group>
   <mat-tab label="Manager">
+    <app-sidenav></app-sidenav>
     <mat-drawer-container class="example-container" autosize>
       <mat-drawer opened class="rps-list" mode="side">
         <app-package-list (click)="selectedRp = $event"></app-package-list>

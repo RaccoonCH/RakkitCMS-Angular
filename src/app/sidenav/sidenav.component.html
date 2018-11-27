@@ -1,0 +1,12 @@
+<div>
+  <div *ngFor="let sn of sns; index as i">
+    <div *ngIf="i > sns.length - 4" class="sheet" [ngClass]="sn.active ? 'active' : 'inactive'" [ngStyle]="sn.active && sn.right ? {right: '-90%'} : {}">
+      <div class="sheet-content">
+        {{i}}
+        <button (click)="closeSheet(i)" mat-button>
+          close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
