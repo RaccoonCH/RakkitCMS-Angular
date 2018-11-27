@@ -1,26 +1,33 @@
-<div>
-  <div *ngFor="let sn of sns; index as i">
-    <div *ngIf="i > sns.length - 4" class="sheet" [ngClass]="sn.active ? 'active' : 'inactive'" [ngStyle]="sn.active && sn.right ? {right: '-90%'} : {}">
-      <div class="sheet-content">
-        <div>
-          <button (click)="closeSheet(i)" mat-button>
-            close
-          </button>
-        </div>
-        <div>
-          Sheet index: {{i}}
-        </div>
-        <div>
-          RP:
-          <b>
-            {{stringify(sn.rp)}}<br>
-          </b>
-        </div>
-        <div>
-          <button mat-button (click)="addSheet({sheet: i + 1})">
-            Next sheet
-          </button>
-        </div>
+<div
+(click)="closeLastSheet()"
+*ngIf="!IsEmpty" class="overlay"></div>
+<div *ngFor="let sheet of _sheets; index as i">
+  <div
+  *ngIf="i > _sheets.length - 4"
+  class="sheet"
+  [ngClass]="sheet.active ? 'active' : 'inactive'"
+  [ngStyle]="getStyle(sheet)">
+    <div
+    (click)="closeLastSheet()"
+    class="sheet-content">
+      <div>
+        <button (click)="closeLastSheet()" mat-button>
+          close
+        </button>
+      </div>
+      <div>
+        Sheet index: {{i}}
+      </div>
+      <div>
+        RP:
+        <b>
+          {{stringify(sheet.rp)}}<br>
+        </b>
+      </div>
+      <div>
+        <button mat-button (click)="addSheet({sheet: i + 1})">
+          Next sheet
+        </button>
       </div>
     </div>
   </div>
