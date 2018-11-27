@@ -14,6 +14,8 @@ export * from './Types/Other/Date'
 export * from './Types/Other/Map'
 export * from './Types/Other/Password'
 
+export * from './UI/Sheet'
+
 export * from './RakkitPackage'
 export * from './IRakkitPackage'
 export * from './User'
