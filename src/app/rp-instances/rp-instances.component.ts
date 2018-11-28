@@ -3,13 +3,14 @@ import { RakkitApiService } from '../rakkit-api.service'
 import { MatSort, MatTableDataSource, PageEvent } from '@angular/material'
 import { RakkitPackage } from '../../types'
 import { RpInstanceResponse } from 'src/types/RakkitApi'
+import { SidenavService } from '../sidenav.service'
 
 @Component({
   selector: 'app-rp-instance',
-  templateUrl: './rp-instance.component.html',
-  styleUrls: ['./rp-instance.component.sass']
+  templateUrl: './rp-instances.component.html',
+  styleUrls: ['./rp-instances.component.sass']
 })
-export class RpInstanceComponent implements OnInit {
+export class RpInstancesComponent implements OnInit {
   @ViewChild(MatSort)
   private _sort: MatSort
   private _selectedRp: RakkitPackage
@@ -43,7 +44,8 @@ export class RpInstanceComponent implements OnInit {
   }
 
   constructor(
-    private _rakkitApiService: RakkitApiService
+    private _rakkitApiService: RakkitApiService,
+    private _sidenavService: SidenavService
   ) {
     this._initialNOIPPLenght = this._numbersOfItemsPerPage.length
     this._rakkitApiService.SelectedRpSubject.subscribe((newSelectedRp) => {
@@ -70,5 +72,9 @@ export class RpInstanceComponent implements OnInit {
     this._pageIndex = event.pageIndex
     this._itemsPerPage = event.pageSize
     this.getItems()
+  }
+
+  private openSideNav(element: Object) {
+    this._sidenavService.RpInstanceSubject.next(element)
   }
 }
