@@ -1,19 +1,22 @@
 <div
 (click)="closeLastSheet()"
-*ngIf="!IsEmpty" class="overlay"></div>
+class="overlay"
+[ngClass]="{'active-overlay': !IsEmpty}"></div>
 <div *ngFor="let sheet of _sheets; index as i">
   <div
-  *ngIf="i > _sheets.length - 4"
+  *ngIf="i > _sheets.length - 5"
   class="sheet"
   [ngStyle]="sheet.Style"
   [ngClass]="{
     'active': sheet.Active,
     'inactive': !sheet.Active, 
-    'good-bye': sheet.Active && sheet.Right
+    'good-bye': !sheet.Active && sheet.Right
   }">
-    <div
-    (click)="closeLastSheet()"
-    class="sheet-content">
+    <div class="sheet-content">
+      <div
+      (click)="closeLastSheet()"
+      class="sheet-overlay"
+      [ngClass]="{'active-overlay': !sheet.Active && !sheet.Right}"></div>
       <div>
         <button (click)="closeLastSheet()" mat-button>
           close
@@ -25,7 +28,7 @@
       <div>
         RP:
         <b>
-          {{stringify(sheet.rp)}}<br>
+          {{stringify(sheet.Rp)}}<br>
         </b>
       </div>
       <div>
