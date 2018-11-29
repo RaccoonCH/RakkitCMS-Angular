@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component } from '@angular/core'
 import { SidenavService } from '../sidenav.service'
 import { Sheet } from '../../types'
 
@@ -8,7 +8,7 @@ import { Sheet } from '../../types'
   styleUrls: ['./sidenav.component.sass']
 })
 export class SidenavComponent {
-  @Input() private sns: Array<Sheet> = []
+  private _sheets: Array<Sheet> = []
 
   constructor(
     private _sidenavService: SidenavService
@@ -18,29 +18,38 @@ export class SidenavComponent {
     })
   }
 
-  addSheet(rp: Object) {
-    if (this.sns.length > 0) {
-      this.sns[this.sns.length - 1].active = false
+  public get IsEmpty() {
+    if (this._sheets.length <= 0) {
+      return true
     }
-    this.sns.push({
-      active: true,
-      right: true,
-      rp
-    })
-    setTimeout(() => {
-      this.sns[this.sns.length - 1].right = false
-    })
+    if (this._sheets.length === 1 && this._sheets[0].Leaving === true) {
+      return true
+    }
+    return false
   }
 
-  closeSheet(index) {
-    this.sns[index].right = true
-    if (this.sns.length > 1) {
-      this.sns[index - 1].active = true
+  async closeLastSheet() {
+    const index = this._sheets.length - 1
+    const lastSheet = this._sheets[index]
+    const beforeLastSheet = this._sheets[index - 1]
+    if ((beforeLastSheet && !beforeLastSheet.Disabling) || !beforeLastSheet) {
+      await Promise.all([
+        lastSheet.close(),
+        this._sheets.length > 1 && beforeLastSheet.enable()
+      ])
+      this._sheets.splice(index, 1)
     }
-    setTimeout(() => {
-      this.sns.splice(index, 1)
-      console.log(this.sns)
-    }, 200)
+  }
+
+  addSheet(rp: Object) {
+    const sheetBefore = this._sheets[this._sheets.length - 1]
+    if (sheetBefore) {
+      sheetBefore.disable()
+    }
+
+    const newSheet = new Sheet(rp)
+    this._sheets.push(newSheet)
+    newSheet.open()
   }
 
   private stringify(obj: Object) {
