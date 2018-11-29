@@ -37,12 +37,16 @@ $base-width: 70%
       @include overlay
       z-index: 99999
 
+.good-bye
+  right: -$base-width
 
 @mixin sheet($width)
   .sheet
     width: $width
   .inactive
     right: 100% - $width
+  .good-bye
+    right: -$width
 
 @media (max-width: 900px)
   @include sheet($width: 80%)

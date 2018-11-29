@@ -5,8 +5,12 @@
   <div
   *ngIf="i > _sheets.length - 4"
   class="sheet"
-  [ngClass]="sheet.active ? 'active' : 'inactive'"
-  [ngStyle]="getStyle(sheet)">
+  [ngStyle]="sheet.Style"
+  [ngClass]="{
+    'active': sheet.Active,
+    'inactive': !sheet.Active, 
+    'good-bye': sheet.Active && sheet.Right
+  }">
     <div
     (click)="closeLastSheet()"
     class="sheet-content">
