@@ -6,14 +6,16 @@ import { AppComponent } from './app.component'
 import { MaterialModule } from './material.module'
 import { PackageListComponent } from './package-list/package-list.component'
 import { RpInstancesComponent } from './rp-instances/rp-instances.component'
-import { SidenavComponent } from './sidenav/sidenav.component'
+import { SidenavComponent } from './sidenav/sidenav.component';
+import { RpInstanceComponent } from './rp-instance/rp-instance.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     PackageListComponent,
     RpInstancesComponent,
-    SidenavComponent
+    SidenavComponent,
+    RpInstanceComponent
   ],
   imports: [
     ApiModule.forRoot({

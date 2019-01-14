@@ -1,5 +1,5 @@
 export class Sheet {
-  private static readonly animationDuration: number = 400
+  private static readonly animationDuration: number = 500
   private _rp: Object
   private _leaving: boolean
   private _disabling: boolean
@@ -38,17 +38,19 @@ export class Sheet {
 
   public get Style() {
     return {
-      transition: `all ${Sheet.animationDuration}ms`
+      transition: `right ${Sheet.animationDuration}ms`
     }
   }
 
-  constructor(rp: Object) {
-    this._rp = rp
+  constructor(rp?: Object) {
+    if (rp) {
+      this._rp = rp
+    }
     this._leaving = false
     this._disabling = false
     this._entering = false
     this._active = false
-    this._right = false
+    this._right = true
   }
 
   private static animationDelay() {
@@ -60,13 +62,13 @@ export class Sheet {
   /**
    * Open the sheet from the right side
    */
-  public async open() {
+  public async open(rp?: Object) {
+    if (rp) {
+      this._rp = rp
+    }
     this._entering = true
-    this._right = true
+    this._right = false
     this._active = true
-    setTimeout(() => {
-      this._right = false
-    })
     await Sheet.animationDelay()
     this._entering = false
   }
@@ -77,6 +79,7 @@ export class Sheet {
   public async close() {
     this._right = true
     this._leaving = true
+    this._active = false
     await Sheet.animationDelay()
     this._leaving = false
   }

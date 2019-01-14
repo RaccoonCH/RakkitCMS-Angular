@@ -6,7 +6,7 @@ import { RpInstanceResponse } from 'src/types/RakkitApi'
 import { SidenavService } from '../sidenav.service'
 
 @Component({
-  selector: 'app-rp-instance',
+  selector: 'app-rp-instances',
   templateUrl: './rp-instances.component.html',
   styleUrls: ['./rp-instances.component.sass']
 })

@@ -8,7 +8,7 @@ import { Sheet } from '../../types'
   styleUrls: ['./sidenav.component.sass']
 })
 export class SidenavComponent {
-  private _sheets: Array<Sheet> = []
+  private _sheets: Array<Sheet> = [ new Sheet() ]
 
   constructor(
     private _sidenavService: SidenavService
@@ -18,38 +18,38 @@ export class SidenavComponent {
     })
   }
 
+  public get TempSheet() {
+    return this._sheets[this._sheets.length - 1]
+  }
+
+  public get LastSheet() {
+    return this._sheets[this._sheets.length - 2]
+  }
+
+  public get BeforeLastSheet() {
+    return this._sheets[this._sheets.length - 3]
+  }
+
   public get IsEmpty() {
-    if (this._sheets.length <= 0) {
-      return true
-    }
-    if (this._sheets.length === 1 && this._sheets[0].Leaving === true) {
-      return true
-    }
-    return false
+    return this._sheets.filter(s => s.Active).length <= 0
   }
 
   async closeLastSheet() {
-    const index = this._sheets.length - 1
-    const lastSheet = this._sheets[index]
-    const beforeLastSheet = this._sheets[index - 1]
-    if ((beforeLastSheet && !beforeLastSheet.Disabling) || !beforeLastSheet) {
+    if ((this.BeforeLastSheet && !this.BeforeLastSheet.Disabling) || !this.BeforeLastSheet) {
       await Promise.all([
-        lastSheet.close(),
-        this._sheets.length > 1 && beforeLastSheet.enable()
+        this.LastSheet.close(),
+        this.BeforeLastSheet && this.BeforeLastSheet.enable()
       ])
-      this._sheets.splice(index, 1)
+      this._sheets.splice(this._sheets.indexOf(this.LastSheet), 1)
     }
   }
 
   addSheet(rp: Object) {
-    const sheetBefore = this._sheets[this._sheets.length - 1]
-    if (sheetBefore) {
-      sheetBefore.disable()
+    if (this.LastSheet) {
+      this.LastSheet.disable()
     }
-
-    const newSheet = new Sheet(rp)
-    this._sheets.push(newSheet)
-    newSheet.open()
+    this.TempSheet.open(rp)
+    this._sheets.push(new Sheet())
   }
 
   private stringify(obj: Object) {
